@@ -1,6 +1,6 @@
 from groq import Groq
 from dotenv import load_dotenv
-from retrieval import retrieve
+from src.retrieval import retrieve
 import os
 
 load_dotenv()
@@ -45,7 +45,7 @@ Answer:"""
     return answer, chunks
 
 if __name__ == "__main__":
-    query = "What is the basic structure doctrine?"
+    query = "What are the fundamental rights related to personal liberty?"
     answer, sources = generate_answer(query)
     
     print(f"\nQuestion: {query}")

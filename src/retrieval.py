@@ -19,7 +19,7 @@ def retrieve(query, k=3):
     return results
 
 if __name__ == "__main__":
-    query = "What is the basic structure doctrine?"
+    query = "What are the fundamental rights related to personal liberty?"
     results = retrieve(query)
     
     print(f"\nQuery: {query}\n")
