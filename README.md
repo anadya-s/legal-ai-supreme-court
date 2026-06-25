@@ -1,11 +1,8 @@
-
-```markdown
 # Legal AI — Indian Supreme Court Assistant
 
 A retrieval-augmented generation system for querying Indian Supreme Court judgments in natural language. Ask a legal question, get a grounded answer with source citations pulled directly from real judgment texts.
 
-**Stack:** FastAPI backend · Streamlit frontend · ChromaDB vector store · Groq LLaMA 3.1
-
+**Stack:** LangChain · ChromaDB · HuggingFace Embeddings · Groq LLaMA 3.1 · FastAPI · Streamlit
 ---
 
 ## What it does
@@ -73,35 +70,25 @@ Current corpus covers landmark Supreme Court constitutional judgments:
 
 Clone the repo and install dependencies:
 
-```bash
-git clone https://github.com/anadya-s/legal-ai-supreme-court.git
-cd legal-ai-supreme-court
-pip install -r requirements.txt
-```
+    git clone https://github.com/anadya-s/legal-ai-supreme-court.git
+    cd legal-ai-supreme-court
+    pip install -r requirements.txt
 
 Create a `.env` file in the root:
 
-```
-GROQ_API_KEY=your_key_here
-```
+    GROQ_API_KEY=your_key_here
 
 Build the vector store:
 
-```bash
-python src/ingestion.py
-```
+    python src/ingestion.py
 
 Start the backend:
 
-```bash
-uvicorn api:app --reload
-```
+    uvicorn api:app --reload
 
 Start the frontend in a new terminal:
 
-```bash
-streamlit run app.py
-```
+    streamlit run app.py
 
 Open `http://localhost:8501` and start asking questions.
 
@@ -109,19 +96,17 @@ Open `http://localhost:8501` and start asking questions.
 
 ## Project structure
 
-```
-legal-ai/
-├── src/
-│   ├── ingestion.py      # document loading, chunking, embedding, ChromaDB storage
-│   ├── retrieval.py      # semantic search with deduplication
-│   └── generator.py      # prompt engineering and Groq LLM call
-├── data/
-│   └── raw/              # Supreme Court judgment text files
-├── api.py                # FastAPI backend with /ask endpoint
-├── app.py                # Streamlit frontend
-├── evaluate.py           # custom evaluation metrics
-└── requirements.txt
-```
+    legal-ai/
+    ├── src/
+    │   ├── ingestion.py      # document loading, chunking, embedding, ChromaDB storage
+    │   ├── retrieval.py      # semantic search with deduplication
+    │   └── generator.py      # prompt engineering and Groq LLM call
+    ├── data/
+    │   └── raw/              # Supreme Court judgment text files
+    ├── api.py                # FastAPI backend with /ask endpoint
+    ├── app.py                # Streamlit frontend
+    ├── evaluate.py           # custom evaluation metrics
+    └── requirements.txt
 
 ---
 
@@ -137,5 +122,3 @@ legal-ai/
 ## Author
 
 Anadya Shekhar · [github.com/anadya-s](https://github.com/anadya-s) · [linkedin.com/in/anadya-shekhar](https://linkedin.com/in/anadya-shekhar)
-```
-
