@@ -1,18 +1,18 @@
 
-```
+```markdown
 # Legal AI — Indian Supreme Court Assistant
 
 A retrieval-augmented generation system for querying Indian Supreme Court judgments in natural language. Ask a legal question, get a grounded answer with source citations pulled directly from real judgment texts.
 
-**Live system:** FastAPI backend + Streamlit frontend, fully containerized.
+**Stack:** FastAPI backend · Streamlit frontend · ChromaDB vector store · Groq LLaMA 3.1
 
 ---
 
 ## What it does
 
-Legal judgments are long, dense, and hard to search. This system lets you ask plain English questions like "What is the basic structure doctrine?" or "What did the Maneka Gandhi case decide about personal liberty?" and get answers grounded in the actual text of Supreme Court judgments — with the exact source chunks cited.
+Legal judgments are long, dense, and hard to search. This system lets you ask plain English questions like "What is the basic structure doctrine?" or "What did the Maneka Gandhi case decide about personal liberty?" and get answers grounded in the actual text of Supreme Court judgments, with the exact source chunks cited.
 
-The system never fabricates. If the answer isn't in the corpus, it says so.
+The system never fabricates. If the answer is not in the corpus, it says so.
 
 ---
 
@@ -26,29 +26,20 @@ Evaluated on 5 test cases covering landmark constitutional judgments:
 | Context Precision | 0.90 |
 | Answer Relevancy | 0.57 |
 
-Faithfulness of 1.00 means every answer is fully grounded in retrieved source material — no hallucination. Context precision of 0.90 means 9 out of 10 retrieved chunks are genuinely relevant to the query.
+Faithfulness of 1.00 means every answer is fully grounded in retrieved source material with no hallucination. Context precision of 0.90 means 9 out of 10 retrieved chunks are genuinely relevant to the query.
 
 ---
 
-## Architecture
+## How it works
 
-```
-User query
-   ↓
-HuggingFace sentence-transformer (all-MiniLM-L6-v2)
-   ↓ embeds query into vector
-ChromaDB similarity search
-   ↓ retrieves top-5 most relevant chunks
-Deduplication layer
-   ↓ removes duplicate chunks across documents
-Groq LLaMA 3.1 (llama-3.1-8b-instant)
-   ↓ generates grounded answer from retrieved context
-FastAPI response with answer + cited sources
-   ↓
-Streamlit frontend
-```
+1. User query is embedded using `all-MiniLM-L6-v2` into a vector
+2. ChromaDB runs similarity search and retrieves the top 5 most relevant chunks
+3. A deduplication layer removes repeated chunks across documents
+4. Retrieved chunks are passed as context to Groq LLaMA 3.1
+5. LLM generates a grounded answer citing specific sources
+6. Answer and sources returned via FastAPI, displayed in Streamlit
 
-Documents are ingested once using `RecursiveCharacterTextSplitter` (chunk size 500, overlap 50), embedded with the same model, and stored persistently in ChromaDB.
+Documents are ingested once using `RecursiveCharacterTextSplitter` with chunk size 500 and overlap 50, embedded with the same model, and stored persistently in ChromaDB.
 
 ---
 
@@ -80,6 +71,8 @@ Current corpus covers landmark Supreme Court constitutional judgments:
 
 ## Quickstart
 
+Clone the repo and install dependencies:
+
 ```bash
 git clone https://github.com/anadya-s/legal-ai-supreme-court.git
 cd legal-ai-supreme-court
@@ -87,21 +80,25 @@ pip install -r requirements.txt
 ```
 
 Create a `.env` file in the root:
+
 ```
 GROQ_API_KEY=your_key_here
 ```
 
 Build the vector store:
+
 ```bash
 python src/ingestion.py
 ```
 
 Start the backend:
+
 ```bash
 uvicorn api:app --reload
 ```
 
-Start the frontend (new terminal):
+Start the frontend in a new terminal:
+
 ```bash
 streamlit run app.py
 ```
@@ -117,7 +114,7 @@ legal-ai/
 ├── src/
 │   ├── ingestion.py      # document loading, chunking, embedding, ChromaDB storage
 │   ├── retrieval.py      # semantic search with deduplication
-│   └── generator.py      # prompt engineering + Groq LLM call
+│   └── generator.py      # prompt engineering and Groq LLM call
 ├── data/
 │   └── raw/              # Supreme Court judgment text files
 ├── api.py                # FastAPI backend with /ask endpoint
@@ -131,15 +128,14 @@ legal-ai/
 ## Limitations and next steps
 
 - Corpus is limited to 5 judgments — expanding to hundreds of cases would significantly improve coverage
-- Answer relevancy (0.57) can be improved with better prompt engineering and a reranking step using a cross-encoder model
-- No authentication on the API — not production-ready for public deployment as-is
-- Chunking by character count sometimes splits mid-sentence — semantic chunking would preserve context better
-- Docker containerization in progress for portable deployment
+- Answer relevancy (0.57) can be improved with better prompt engineering and a cross-encoder reranking step
+- Semantic chunking would preserve context better than fixed character splits
+- Docker containerization and Hugging Face Spaces deployment in progress
 
 ---
 
 ## Author
 
-Anadya Shekhar — [github.com/anadya-s](https://github.com/anadya-s) · [linkedin.com/in/anadya-shekhar](https://linkedin.com/in/anadya-shekhar)
+Anadya Shekhar · [github.com/anadya-s](https://github.com/anadya-s) · [linkedin.com/in/anadya-shekhar](https://linkedin.com/in/anadya-shekhar)
 ```
 
