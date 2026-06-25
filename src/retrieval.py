@@ -1,5 +1,5 @@
-from langchain_community.embeddings import HuggingFaceEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
 
 CHROMA_DIR = "chroma_db"
 
@@ -13,9 +13,16 @@ def load_vectorstore():
     )
     return vectorstore
 
-def retrieve(query, k=3):
+def retrieve(query, k=5):
     vectorstore = load_vectorstore()
     results = vectorstore.similarity_search(query, k=k)
+    seen = set()
+    unique = []
+    for doc in results:
+        if doc.page_content not in seen:
+            seen.add(doc.page_content)
+            unique.append(doc)
+    return unique
     return results
 
 if __name__ == "__main__":

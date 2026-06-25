@@ -1,0 +1,37 @@
+[
+  {
+    "question": "What is the basic structure doctrine?",
+    "answer": "According to Source 1, the basic structure doctrine may be described as consisting of the following features:\n\n1. Supremacy of the Constitution;\n2. Republican and Democratic form of Government.\n3. Sec",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.75,
+    "context_precision": 0.5
+  },
+  {
+    "question": "Can Parliament amend fundamental rights?",
+    "answer": "According to Source 1, Fundamental Rights cannot be abridged or taken away by the ordinary amending process. Furthermore, it implies that even the Parliament does not have the direct power to amend th",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.675,
+    "context_precision": 1.0
+  },
+  {
+    "question": "What protections does Article 21 provide?",
+    "answer": "According to Source 1, Article 21 of the Constitution provides protection of life and personal liberty. No person shall be deprived of his life or personal liberty except according to procedure establ",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.4,
+    "context_precision": 1.0
+  },
+  {
+    "question": "What did the Maneka Gandhi case decide about personal liberty and procedure?",
+    "answer": "According to Source 2, the Maneka Gandhi case decided that even if there is a law prescribing a procedure for depriving a person of 'personal liberty', it does not necessarily mean that there is no in",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.5476,
+    "context_precision": 1.0
+  },
+  {
+    "question": "What did the court say about freedom of speech?",
+    "answer": "According to Source 1, the court stated that freedom of speech lay at the foundation of good government, and this has been emphasized in various judgments of the Court (Source 1). \n\nLater, in Source 2",
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.5,
+    "context_precision": 1.0
+  }
+]
